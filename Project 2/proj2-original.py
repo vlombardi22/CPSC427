@@ -3,6 +3,7 @@ Team Member #1: Maxwell Sherman
 Team Member #2: N/A
 Zagmail address for team member 1: msherman3@zagmail.gonzaga.edu
 Project 2: This project demonstrates counting how many words are in a text file
+Usage: python3 proj2.py
 Due: 2019-01-25 18:00 PT
 '''
 
