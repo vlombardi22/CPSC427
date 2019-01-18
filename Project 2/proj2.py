@@ -10,7 +10,8 @@ import re
 
 def openBook():
     while(True):
-        bookFile = raw_input("Enter an input file name (must exist): ")
+        # bookFile = raw_input("Enter an input file name (must exist): ")
+        bookFile = "vanityfair.txt"
         try:
             bookFile = open(bookFile, 'r')
             break
@@ -18,35 +19,52 @@ def openBook():
             print("Invalid file name. Try again.")
     return bookFile
 
+# takes a raw text file of a book and tokenizes it into a single line of all lowercase words
+# words are included only if they contain just alpha characters and apostrophes
+# this is not an accurate word count! it's just done this way for consistency in grading
 def tokenize(bookFile):
-    tokenizedBook = ""
-    for line in bookFile:
-        tokenizedBook += (line[:-2] + " ") # replace CRLF with space
-    tokenizedBook = re.sub(r"--", r" ", tokenizedBook) # replace pause with space
-    tokenizedBook = re.sub(r"[^A-Za-z' ]", r"", tokenizedBook) # remove extraneous characters
+    tokenizedBook = bookFile.read() # entire book into string
+    
+    tokenizedBook = tokenizedBook.replace("\n", " ").replace("\r", " ") # replace CRLFs with spaces
+    tokenizedBook = tokenizedBook.lower() # make everything lowercase
     tokenizedBook = re.sub(r" [^Aa] ", r" ", tokenizedBook) # remove 1-word "words" except "a"
-    tokenizedBook = re.sub(r" +", r" ", tokenizedBook) # remove extra spaces
+    
+    tokenizedBook = tokenizedBook.split() # split book into a list of words
+    
+    tokenizedBook = [word for word in tokenizedBook if not re.search(r"[^A-Za-z' ]", word)] # filter out words with non-alpha or apostrophe characters
     
     return tokenizedBook
 
+# takes a tokenized corpus and returns a dict of how many words start with each letter
 def countWords(tokenizedBook):
-    tokenizedBook = tokenizedBook.split()
-    counter = 0
+    wordCountDict = {}
     for word in tokenizedBook:
-        counter += 1
-    return counter
+        if word[0] in wordCountDict:
+            wordCountDict[word[0]] += 1
+        else:
+            wordCountDict[word[0]] = 1
+    return wordCountDict
 
+# prints everything from a dictionary in order and formatted nicely
+# done by dumping every dict value into a list and sorting it
+def fancyPrint(wordCountDict):
+    printList = []
+    for letter in wordCountDict:
+        printList.append((letter, wordCountDict[letter]))
+    printList.sort()
+    for letter in printList:
+        print(letter[0].upper() + ": " + str(letter[1]))
+
+# main driver function
 def main():
     bookFile = openBook()
     
     tokenizedBook = tokenize(bookFile)
     
-    wordCount = countWords(tokenizedBook)
+    wordCountDict = countWords(tokenizedBook)
     
     bookFile.close()
     
-    # print tokenizedBook
-    # print "\n"
-    print("Book has " + str(wordCount) + " words.")
+    fancyPrint(wordCountDict)
 
 main()
