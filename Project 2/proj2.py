@@ -28,11 +28,11 @@ def tokenize(bookFile):
     
     tokenizedBook = tokenizedBook.replace("\n", " ").replace("\r", " ") # replace CRLFs with spaces
     tokenizedBook = tokenizedBook.lower() # make everything lowercase
-    tokenizedBook = re.sub(r" [^Aa] ", r" ", tokenizedBook) # remove 1-word "words" except "a"
+    tokenizedBook = re.sub(r" [^ai] ", r" ", tokenizedBook) # remove 1-word "words" except "a"
     
     tokenizedBook = tokenizedBook.split() # split book into a list of words
     
-    tokenizedBook = [word for word in tokenizedBook if not re.search(r"[^A-Za-z' ]", word)] # filter out words with non-alpha or apostrophe characters
+    tokenizedBook = [word for word in tokenizedBook if not re.search(r"[^a-z' ]", word)] # filter out words with non-alpha or apostrophe characters
     
     return tokenizedBook
 
