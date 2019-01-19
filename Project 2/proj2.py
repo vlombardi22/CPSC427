@@ -11,8 +11,7 @@ import re
 
 def openBook():
     while(True):
-        # bookFile = raw_input("Enter an input file name (must exist): ")
-        bookFile = "vanityfair.txt"
+        bookFile = raw_input("Enter an input file name (must exist): ")
         try:
             bookFile = open(bookFile, 'r')
             break
