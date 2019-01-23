@@ -11,7 +11,7 @@ import re
 
 def openBook():
     while(True):
-        bookFile = raw_input("Enter an input file name (must exist): ")
+        bookFile = input("Enter an input file name (must exist): ")
         try:
             bookFile = open(bookFile, 'r')
             break
@@ -32,6 +32,7 @@ def tokenize(bookFile):
     tokenizedBook = tokenizedBook.split() # split book into a list of words
     
     tokenizedBook = [word for word in tokenizedBook if not re.search(r"[^a-z' ]", word)] # filter out words with non-alpha or apostrophe characters
+    tokenizedBook = [word for word in tokenizedBook if not word[0] == "'" and not word[-1] == "'"] # filter out words that start and end with apostrophe
     
     return tokenizedBook
 
