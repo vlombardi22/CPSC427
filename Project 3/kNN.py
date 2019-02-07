@@ -1,6 +1,6 @@
 '''
 Team Member #1: Maxwell Sherman
-Team Member #2: N/A
+Team Member #2: Vincent Lombardi
 Zagmail address for team member 1: msherman3@zagmail.gonzaga.edu
 Project 2: This project demonstrates the functionality of k-nearest neighbors
 Usage: python3 proj3.py
@@ -181,17 +181,3 @@ def test_classifier(norm_data_matrix, labels_vector):
             print
             
     print("Error Rate: %f" % (error_ct/float(num_tst_points) * 100)) + " percent"
-
-        
-              
-            
-    
-    
-    
-    
-                             
-    
-    
-
-
-    

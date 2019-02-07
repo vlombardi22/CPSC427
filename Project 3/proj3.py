@@ -1,6 +1,6 @@
 '''
 Team Member #1: Maxwell Sherman
-Team Member #2: N/A
+Team Member #2: Vincent Lombardi
 Zagmail address for team member 1: msherman3@zagmail.gonzaga.edu
 Project 2: This project demonstrates the functionality of k-nearest neighbors
 Usage: python3 proj3.py
@@ -34,12 +34,13 @@ def classify_person(norm_data_matrix, range_vals, min_vals, labels_vector):
 
 def main():
     data_matrix, labels_vector = file2matrix("datingTestSet2.txt")
+    print(data_matrix)
+    print()
+    print(labels_vector)
     plot_data(data_matrix)
     norm_data_matrix, range_vals, min_vals = normalize(data_matrix)
     #test_classifier(norm_data_matrix, labels_vector)
     classify_person(norm_data_matrix, range_vals, min_vals, labels_vector)
-    
-    
     
     
 main()
