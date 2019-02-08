@@ -1,3 +1,12 @@
+'''
+Team Member #1: Maxwell Sherman
+Team Member #2: Vincent Lombardi
+Zagmail address for team member 1: msherman3@zagmail.gonzaga.edu
+Project 2: This project demonstrates k-nearest neighbors by identifying varied handwritten numbers
+Usage: python3 proj4.py
+Due: 2019-02-08 18:00 PT
+'''
+
 from kNN import *
 from os import listdir
 
@@ -21,19 +30,13 @@ Each training, test file is a 32X32 matrix of 0's and 1's.  The goal is to
 transform the matrix into a vector, where 32nd position of the vector begins
 with the 0th item in the 1st row the matrix. This function and the following
 one unpacks a 2-D array into a 1-D array.
-
-A simpler example:
-ex = matrix([[1,2],[3,4],[5,6]])
-vect = zeros((1,6))
-for i in range(3):
-    for j in range(2):
-        vect[0,2*i+j] = sample[i,j]
-vect now contains: [1,2,3,4,5,6]
 '''
 def img2vector(file_name,path):
     file_name = path+file_name
-    # vect = zeros((1,1024)) #store zeros in a 1X1024 vector.
     f = open(file_name, 'r')
+    
+    # create a string, append each line of the file except newlines,
+    # then convert string to a numpy array of ints
     vect = ''
     for line in f:
         vect += line[:-1]
@@ -55,11 +58,6 @@ extract the class number from the file name and return it to make_labels
 def class_number(file_name):
     return file_name[:1]
 
-def timer_function(timer, m):
-    #I use this to print a periodic message to the user so that s/he
-    #knows that things are progressing well
-    print('.', end='')
-
 '''
 test all of the files in the test directory
 '''
@@ -69,19 +67,21 @@ def test_classifier(test_path, train_matrix, train_labels, k):
     error_count = 0
     success_count = 0
     
+    # for each test file, classify it and compare the value to correct one (first digit of filename)
     for i in range(len(file_lst)):
         result = classify(img2vector(file_lst[i], test_path), train_matrix, train_labels, k)
         if result == test_labels[i]:
             success_count += 1
         else:
             error_count += 1
-        if i % 50 == 0:
-            print('.', end='')
-    print('Classifying complete.')
+    print('Classifying complete.\n')
     
     print('Total Errors: ' + str(error_count))
     print('Error Rate: %.2f%%' % (100 * float(error_count)/float(error_count + success_count)))
-         
+
+'''
+main driver function
+'''
 def main():
     k = 3
     train_path = 'trainingDigits/'
