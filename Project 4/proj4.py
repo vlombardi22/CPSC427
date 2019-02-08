@@ -37,7 +37,7 @@ def img2vector(file_name,path):
     vect = ''
     for line in f:
         vect += line[:-1]
-    vect = array([char for char in vect])
+    vect = array([int(char) for char in vect])
     f.close()
     return vect
 
@@ -65,10 +65,18 @@ test all of the files in the test directory
 '''
 def test_classifier(test_path, train_matrix, train_labels, k):
     file_lst = listdir(test_path)
+    test_labels = make_labels(test_path)
     
-    for f in file_lst:
-        result = classify(img2vector(f, test_path), train_matrix, train_labels, k)
-        print(result) # if result matches first digit of filename (see functions above), success else error
+    for i in range(len(file_lst)):
+        result = classify(img2vector(file_lst[i], test_path), train_matrix, train_labels, k)
+        # with open(test_path + file_lst[i]) as f:
+        #     for line in f:
+        #         print(line, end='')
+        if result == test_labels[i]:
+            print("success: " + result + ", " + test_labels[i])
+        else:
+            print("err " + result + ", " + test_labels[i])
+        # print('\n')
     
     # print("Total Errors: " + str(errors))
     # print("Error Rate: " + str(float(errors)/float(m)))
