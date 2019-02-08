@@ -66,39 +66,33 @@ test all of the files in the test directory
 def test_classifier(test_path, train_matrix, train_labels, k):
     file_lst = listdir(test_path)
     test_labels = make_labels(test_path)
+    error_count = 0
+    success_count = 0
     
     for i in range(len(file_lst)):
         result = classify(img2vector(file_lst[i], test_path), train_matrix, train_labels, k)
-        # with open(test_path + file_lst[i]) as f:
-        #     for line in f:
-        #         print(line, end='')
         if result == test_labels[i]:
-            print("success: " + result + ", " + test_labels[i])
+            success_count += 1
         else:
-            print("err " + result + ", " + test_labels[i])
-        # print('\n')
+            error_count += 1
+        if i % 50 == 0:
+            print('.', end='')
+    print('Classifying complete.')
     
-    # print("Total Errors: " + str(errors))
-    # print("Error Rate: " + str(float(errors)/float(m)))
+    print('Total Errors: ' + str(error_count))
+    print('Error Rate: %.2f%%' % (100 * float(error_count)/float(error_count + success_count)))
          
 def main():
     k = 3
     train_path = 'trainingDigits/'
     test_path = 'testDigits/'
     
-    '''
-    matrix = make_matrix(train_path)
-    lst = make_labels(train_path)
-    for i in range(5):
-        print(lst[i])
-        print(list(matrix[i]))
-        print()
-    '''
+    print('Training...')
     train_labels = make_labels(train_path)
-    # for i in range(200):
-    #     print(train_labels[5])
     train_matrix = make_matrix(train_path)
+    print('Training complete.')
     
+    print('Classifying...')
     test_classifier(test_path, train_matrix, train_labels, k)
     
 main()
