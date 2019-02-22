@@ -1,13 +1,13 @@
 '''
 Class: CPSC 427
-Team Member 1: Paul De Palma
-Team Member 2: None
-Submitted By Paul De Palma
-GU Username: depalma
-File Name: eight_puzzle.py
-Generates first-level child states from an initial state of the 8-puzzle
+Team Member 1: Maxwell Sherman
+Team Member 2: Vincent Lombardi
+Submitted By Maxwell Sherman
+GU Username: msherman3
+File Name: proj6.py
+Generates all child states from an initial state of the 8-puzzle until a solution
 Reference: An Eight-Puzzle Solver in Python, https://gist.github.com/flatline/8382021
-Usage: python eight_puzzle.py
+Usage: python3 proj6.py
 '''
 
 from copy import deepcopy
@@ -19,7 +19,6 @@ class EightPuzzle:
         self.state_lst = [[row for row in parent]]
 
     # displays all states in state_lst
-    # displays all states in state_lst
     def display(self):
         index = 1
         for state in self.state_lst:
@@ -27,11 +26,10 @@ class EightPuzzle:
             index += 1
             for row in state:
                 print(row)
-            print("")
+            print()
 
     # returns (row,col) of value in state indexed by state_idx
     def find_coord(self, value, state_idx):
-
         for row in range(3):
             for col in range(3):
                 if self.state_lst[state_idx][row][col] == value:
@@ -54,10 +52,10 @@ class EightPuzzle:
 
         return moves
 
-    # Generates all child states for the state indexed by state_idx
-    # in state_lst. Appends child states to the list
+    # generates all child states for the state indexed by state_idx
+    # in state_lst
+    # appends child states to the list
     def generate_states(self, state_idx):
-
         # get legal moves
         move_lst = self.get_new_moves(state_idx)
 
@@ -79,7 +77,7 @@ class EightPuzzle:
 
             # append child state to the list of states.
             if child not in self.state_lst:
-                # append child state to the list of states.
+                # append child state to the list of states
                 self.state_lst.append(child)
 
                 if self.is_solved():
@@ -95,8 +93,8 @@ class EightPuzzle:
         return correct_lst == self.state_lst[-1]
 
 def main():
-    # nested list representation of 8 puzzle. 0 is the blank.
-    # This configuration is found on slide 8, E: Two Search Algorithms
+    # nested list representation of 8 puzzle - 0 is the blank
+    # this configuration is found on slide 8, E: Two Search Algorithms
     parent = [[2, 8, 3],
               [1, 6, 4],
               [7, 0, 5]]
@@ -104,14 +102,12 @@ def main():
     # initialize the list of states (state_lst) with the parent
     p = EightPuzzle(parent)
 
-    # Generate the states reachable from the parent, i.e., 0th state in state_lst
-    # p.generate_states(0)
+    # generate the states reachable from the parent, i.e., 0th state in state_lst
     index = 0
     while not p.generate_states(index):
         index += 1
 
     # display all states in state_lst
     p.display()
-
 
 main()
