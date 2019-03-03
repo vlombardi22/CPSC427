@@ -51,12 +51,11 @@ class EightPuzzle:
             moves.append((row + 1, col))  # go down
 
         return moves
-    
-    '''
+
     # generates all child states for the state indexed by state_idx
     # in state_lst
     # appends child states to the list
-    def generate_states_old(self, state_idx):
+    def generate_states(self, state_idx):
         # get legal moves
         move_lst = self.get_new_moves(state_idx)
 
@@ -85,49 +84,28 @@ class EightPuzzle:
                     return True
 
         return False
-    
+
     def is_solved(self):
         # correct_lst represents the solution for the game
         correct_lst = [[1, 2, 3],
                        [8, 0, 4],
                        [7, 6, 5]]
         return correct_lst == self.state_lst[-1]
-    '''
-    
-    def breadth_first(self, start):
-        goal = [[1, 2, 3],
-                [8, 0, 4],
-                [7, 6, 5]]
-        
-        open_queue = closed_queue = children = []
-        open_queue.append(start)
-        while not len(open_queue) == 0:
-            cur = open_queue[0]
-            open_queue = open_queue[1:]
-            if (cur == goal):
-                return True
-            closed_queue.append(cur)
-        for child in cur: # moving left to right
-            children.append(child)
-        while not len(children) == 0:
-            child = children[0]
-            children = children[1:]
-            if (child not in open_queue and child not in closed_queue):
-                open_queue.append(child)
-        return False
 
 def main():
     # nested list representation of 8 puzzle - 0 is the blank
     # this configuration is found on slide 8, E: Two Search Algorithms
-    start = [[2, 8, 3],
-             [1, 6, 4],
-             [7, 0, 5]]
+    parent = [[2, 8, 3],
+              [1, 6, 4],
+              [7, 0, 5]]
 
     # initialize the list of states (state_lst) with the parent
-    p = EightPuzzle(start)
-    
-    # new version
-    p.breadth_first(start)
+    p = EightPuzzle(parent)
+
+    # generate the states reachable from the parent, i.e., 0th state in state_lst
+    index = 0
+    while not p.generate_states(index):
+        index += 1
 
     # display all states in state_lst
     p.display()
