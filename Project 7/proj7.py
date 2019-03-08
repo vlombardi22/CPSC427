@@ -21,10 +21,17 @@ class EightPuzzle:
     # displays all states in state_lst
     def display(self):
         index = 1
+        goal = [[1, 2, 3],
+                [8, 0, 4],
+                [7, 6, 5]]
+
         for state in self.state_lst:
-            print(index)  # displays which part of the tree is being printed
+            print("index: " + str(index))  # displays which part of the tree is being printed
             index += 1
-            for row in state:
+            # f_value = state[1] + self.h_value(state, goal)
+            # print("f-value: " + str(f_value))
+            print("g-value: " + str(state[1]))
+            for row in state[0]:
                 print(row)
             print()
 
@@ -59,18 +66,21 @@ class EightPuzzle:
     # appends child states to the list
     def generate_states(self, state):
         temp_lst = []
+        g_val = state[1]
+        # print(g_val)
+        g_val += 1
 
         # get legal moves
-        move_lst = self.get_new_moves(state)
+        move_lst = self.get_new_moves(state[0])
         # blank is a tuple, holding coordinates of the blank tile
-        blank = self.find_coord(0, state)
+        blank = self.find_coord(0, state[0])
         # tile is a tuple, holding coordinates of the tile to be swapped
         # with the blank
         for tile in move_lst:
             # create a new state using deep copy
             # ensures that matrices are completely independent
 
-            child = deepcopy(state)
+            child = deepcopy(state[0])
 
             # move tile to position of the blank
             child[blank[0]][blank[1]] = child[tile[0]][tile[1]]
@@ -78,7 +88,7 @@ class EightPuzzle:
             child[tile[0]][tile[1]] = 0
             # append child state to the list of states.
 
-            temp_lst.append(child)
+            temp_lst.append((child, g_val))
         return temp_lst
 
     def test_display(self, state):
@@ -91,15 +101,18 @@ class EightPuzzle:
         goal = [[1, 2, 3],
                 [8, 0, 4],
                 [7, 6, 5]]
+        f_value_start = 0 + self.h_value(start, goal)
+        open_queue = [(f_value_start, start, 0)]
         children = []
-        f_value_start = g_value + self.heuristic(start, goal)
-        open_queue = [(f_value_start, start)]
         closed_queue = []
         while not len(open_queue) == 0:
-            cs = open_queue[0][1]
+
+            cs = (open_queue[0][1], open_queue[0][2])  # take from the front of the queue (best scored state)
             open_queue = open_queue[1:]
-            if cs == goal:
-                return cs
+            closed_queue.append(cs)  # appends the child that we actually use to the list
+            if cs[0] == goal:
+                # closed_queue.append(cs)
+                return closed_queue
 
             new_moves = self.generate_states(cs)
             for state in new_moves:
@@ -107,28 +120,55 @@ class EightPuzzle:
 
             while len(children) != 0:
                 child = children[0]
-                print(child)
-                children = children[1:]
-                if child not in open_queue and child not in closed_queue:
-                    f_value = len(self.state_lst) - 1 + self.heuristic(child, goal)
-                    closed_queue.append((f_value, child))
-                    print("serious punch")
-                elif child in open_queue:
-                    print("pika!!!")
-                elif child in closed_queue:
-                    print("yar har fiddle dee dee")
-                closed_queue.append((SOMETHING, child))
-                closed_queue.sort()
+                children.pop(0)
+
+                # if child[0] not in open_queue and child[0] not in closed_queue:
+                if (child[0] not in [item[1] for item in open_queue] and
+                        child[0] not in [item[1] for item in closed_queue]):
+                    # print(child[0])
+                    f_value = child[1] + self.h_value(child[0], goal)
+                    open_queue.append((f_value, child[0], child[1]))
+                    if child[0] == goal:
+                        closed_queue.append(child)
+                        return closed_queue
+                # elif child[0] in simple_open_queue:
+                """
+                elif child[0] in [item[1] for item in open_queue]:
+                    # index = open_queue.index(child[0])
+                    if child[1] < open_queue[i][2]:
+                        open_queue[index][2] = child[1]
+                # elif child[0] in closed_queue:
+                elif child[0] in [item[1] for item in closed_queue]:
+                    index = closed_queue.index(child[0])
+                    if child[1] < closed_queue[index][1]:
+                        closed_queue.pop(index)
+                        f_value = child[1] + self.h_value(child[0], goal)
+                        open_queue.append((f_value, child[0], child[1]))
+                        # open_queue.append(child)
+                """
+                # closed_queue.append(child)
+                open_queue.sort()
+
             # add one with lowest score to self.state_lst
             # use this variable to find the g value too
+        # self.state_lst = simple_closed_queue
         # return cs
 
-    def heuristic(self, current_state, goal_state):
+    def g_value(self, state):
+        # depth tree where this state is
+        return 0
+
+    def h_value(self, current_state, goal_state):
         wrong_count = 0
         for i, row in enumerate(current_state):
-            for j, value in enumerate(current_state):
+            #try:
+            for j, value in enumerate(row):
+                # print(str(value) + ' ?= ' + str(goal_state[i][j]) + ' ', end='')
                 if value != goal_state[i][j]:
                     wrong_count += 1
+            # print()
+            #except:
+            #    print('error: ' + str(current_state))
         return wrong_count
 
 def main():
@@ -142,7 +182,7 @@ def main():
     p = EightPuzzle(parent)
 
     # generate the states reachable from the parent, i.e., 0th state in state_lst
-    p.best_first()
+    p.state_lst = p.best_first()
 
     # display all states in state_lst
     p.display()
