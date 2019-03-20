@@ -1,3 +1,5 @@
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.*;
 import java.lang.*;
 
@@ -125,12 +127,12 @@ public class Mate
             }
 
             //swap gene1 in child1 and child2
-            MT_child1.SetGene(crossPoint1, MT_mother.GetGene(crossPoint1));
-            MT_child2.SetGene(crossPoint1, MT_father.GetGene(crossPoint1));
+            MT_child1.SetGene(crossPoint1, MT_father.GetGene(crossPoint1));
+            MT_child2.SetGene(crossPoint1, MT_mother.GetGene(crossPoint1));
 
             //swap gene2 in child1 and child2
-            MT_child1.SetGene(crossPoint2, MT_mother.GetGene(crossPoint2));
-            MT_child2.SetGene(crossPoint2, MT_father.GetGene(crossPoint2));
+            MT_child1.SetGene(crossPoint2, MT_father.GetGene(crossPoint2));
+            MT_child2.SetGene(crossPoint2, MT_mother.GetGene(crossPoint2));
 
             //swap the other versions of those genes
             MT_child1.SetGene(MT_mother_loc1, MT_child2.GetGene(crossPoint1));
@@ -138,13 +140,31 @@ public class Mate
             MT_child2.SetGene(MT_father_loc1, MT_child1.GetGene(crossPoint1));
             MT_child2.SetGene(MT_father_loc2, MT_child1.GetGene(crossPoint2));
 
+            /*
+            System.out.print(crossPoint1);
+            System.out.print(", ");
+            System.out.println(crossPoint2);
+            System.out.print("mother: ");
+            MT_mother.DisplayGenes();
+            System.out.println();
+            System.out.print("father: ");
+            MT_father.DisplayGenes();
+            System.out.println();
+            System.out.print("child1: ");
+            MT_child1.DisplayGenes();
+            System.out.println();
+            System.out.print("child2: ");
+            MT_child2.DisplayGenes();
+            System.out.println("\n");
+            */
+
             population.add(MT_posChild1,MT_child1);
             population.add(MT_posChild2,MT_child2);
 
-            MT_posChild1    = MT_posChild1 + 2;
-            MT_posChild2    = MT_posChild2 + 2;
-            MT_posFather    = MT_posFather + 2;
-            MT_posMother    = MT_posMother + 2;
+            MT_posChild1 = MT_posChild1 + 2;
+            MT_posChild2 = MT_posChild2 + 2;
+            MT_posFather = MT_posFather + 2;
+            MT_posMother = MT_posMother + 2;
         }
         return population;
     }
