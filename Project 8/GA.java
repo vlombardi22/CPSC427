@@ -211,7 +211,7 @@ public abstract class GA extends Object
         int iterationCt = 0;
         Pair pairs      = new Pair(GA_pop);
         //int numPairs    = pairs.SimplePair();
-        int numPairs = GA_pop.size
+        int numPairs = GA_pop.size();
         GA_pop = pairs.TournamentPair();
         boolean found   = false;
 
