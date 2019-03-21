@@ -100,6 +100,40 @@ public abstract class GA extends Object
 
     protected void Mutate()
     {
+        
+        int totalGenes  = (GA_numGenes * GA_numChromes);
+        int numMutate   = (int) (totalGenes * GA_mutFact);
+        Random rnum     = new Random();
+
+        for (int i = 0; i < numMutate; i++) {
+            //position of chromosome to mutate--but not the first one
+            //the number generated is in the range: [1..GA_numChromes)
+
+            int chromMut = 1 + (rnum.nextInt(GA_numChromes - 1));
+            chromMut = chromMut / 2; // I added this line for tournament pairing
+            int geneMut = rnum.nextInt(GA_numGenes); //pos of mutated gene
+            int geneMut2 = rnum.nextInt(GA_numGenes);
+            if(geneMut == geneMut2){
+                if(geneMut == 0){
+                    geneMut2++;
+                }else{
+                    geneMut2--;
+                }
+            }
+
+            Chromosome newChromosome = GA_pop.remove(chromMut); //get chromosome
+            //DisplayChromosome(newChromosome);
+            //System.out.println("");
+            // swaps the genes
+            char temp = newChromosome.GetGene(geneMut);
+            newChromosome.SetGene(geneMut, newChromosome.GetGene(geneMut2));
+            newChromosome.SetGene(geneMut2, temp);
+            GA_pop.add(newChromosome); //add mutated chromosome at the end
+            //DisplayChromosome(newChromosome);
+            //System.out.println("");
+           // System.out.println("");
+        }
+        /**        
         int totalGenes  = (GA_numGenes * GA_numChromes);
         int numMutate   = (int) (totalGenes * GA_mutFact);
         Random rnum     = new Random();
@@ -121,6 +155,7 @@ public abstract class GA extends Object
 
             GA_pop.add(newChromosome); //add mutated chromosome at the end
         }
+        */
 
     }
 
