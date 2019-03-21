@@ -286,7 +286,7 @@ public class Mate
 
 
     // Cycle
-    public ArrayList<Chromosome> Cycle(ArrayList<Chromosome> population, int numPairs) {
+    public ArrayList<Chromosome> CycleCrossover(ArrayList<Chromosome> population, int numPairs) {
         for (int j = 0; j < numPairs; j++) {
             MT_father = population.get(MT_posFather);
             MT_mother = population.get(MT_posMother);
@@ -341,8 +341,15 @@ public class Mate
         return population;
     }
 
-    
+    private int repeatChecker(ArrayList<Character> input){
+        for(int x = 0; x < input.size(); x++){
+            for(int y = x + 1; y < input.size(); y++){
+                if(input.get(x) == input.get(y)){
+                    return y;
+                }
+            }
+        }
 
-
-
+        return -1;
+    }
 }

@@ -100,7 +100,7 @@ public abstract class GA extends Object
 
     protected void Mutate()
     {
-        
+
         int totalGenes  = (GA_numGenes * GA_numChromes);
         int numMutate   = (int) (totalGenes * GA_mutFact);
         Random rnum     = new Random();
@@ -133,7 +133,8 @@ public abstract class GA extends Object
             //System.out.println("");
            // System.out.println("");
         }
-        /**        
+
+        /*
         int totalGenes  = (GA_numGenes * GA_numChromes);
         int numMutate   = (int) (totalGenes * GA_mutFact);
         Random rnum     = new Random();
@@ -161,7 +162,32 @@ public abstract class GA extends Object
 
     protected void InitPop()
     {
+        Random rnum = new Random();
+        char letter;
+        for (int index = 0; index < GA_numChromesInit; index++)
+        {
+            Chromosome Chrom = new Chromosome(GA_numGenes);
+            ArrayList<Character> genePool = new ArrayList<>();
+            int unusedGenes = GA_numGenes;
+            for(int counter = 0; counter < GA_numGenes; counter++){ // this prevents repeate
+                genePool.add(((char) (counter + 97)));
+            }
 
+            for (int j = 0; j < GA_numGenes; j++)
+            {
+                //letter = (char) (rnum.nextInt(26) + 97); //97 is the value 'a'
+                //letter = (char) (rnum.nextInt(8)+97);
+                int rindex = rnum.nextInt(unusedGenes);
+                letter = genePool.get(rindex);
+                Chrom.SetGene(j, letter);
+                genePool.remove(rindex);
+                unusedGenes--;
+            }
+            Chrom.SetCost(0);
+            GA_pop.add(Chrom);
+        }
+
+        /*
         Random rnum = new Random();
         char letter;
         for (int index = 0; index < GA_numChromesInit; index++)
@@ -176,6 +202,7 @@ public abstract class GA extends Object
             Chrom.SetCost(0);
             GA_pop.add(Chrom);
         }
+        */
     }
     protected abstract void ComputeCost();
 

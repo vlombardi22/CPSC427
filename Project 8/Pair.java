@@ -16,7 +16,7 @@ public class Pair
         return (PR_pop.size() / 4);//the number of mating pairs
     }
 
-    public ArrayList<Chromosome> tournament() {
+    public ArrayList<Chromosome> TournamentPair() {
         ArrayList<Chromosome> matingPairs = new ArrayList<>();
         Random rnum = new Random();
         int subsetSize = rnum.nextInt((PR_pop.size() - 2) + 1) + 2;
