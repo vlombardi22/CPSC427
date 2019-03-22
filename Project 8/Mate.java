@@ -1,5 +1,3 @@
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-
 import java.util.*;
 import java.lang.*;
 
@@ -88,103 +86,60 @@ public class Mate
             char MT_father_gene1 = MT_father.GetGene(crossPoint1);
             char MT_father_gene2 = MT_father.GetGene(crossPoint2);
 
-            //where the matching genes are in the other parent
-            int MT_mother_loc1 = 0; //index of father gene1 in mother
-            for (int i = 0; i < MT_mother.GetNumGenes(); i++)
-            {
-                if (MT_mother.GetGene(i) == MT_father_gene1)
+            if (MT_mother_gene1 != MT_father_gene1 &&
+                    MT_mother_gene2 != MT_father_gene2) {
+                //where the matching genes are in the other parent
+                int MT_mother_loc1 = 0; //index of father gene1 in mother
+                for (int i = 0; i < MT_mother.GetNumGenes(); i++) {
+                    if (MT_mother.GetGene(i) == MT_father_gene1) {
+                        MT_mother_loc1 = i;
+                        break;
+                    }
+                }
+                int MT_mother_loc2 = 0; //index of father gene2 in mother
+                for (int i = 0; i < MT_mother.GetNumGenes(); i++) {
+                    if (MT_mother.GetGene(i) == MT_father_gene2) {
+                        MT_mother_loc2 = i;
+                        break;
+                    }
+                }
+                int MT_father_loc1 = 0; //index of mother gene1 in father
+                for (int i = 0; i < MT_father.GetNumGenes(); i++) {
+                    if (MT_father.GetGene(i) == MT_mother_gene1) {
+                        MT_father_loc1 = i;
+                        break;
+                    }
+                }
+                int MT_father_loc2 = 0; //index of mother gene1 in father
+                for (int i = 0; i < MT_father.GetNumGenes(); i++) {
+                    if (MT_father.GetGene(i) == MT_mother_gene2) {
+                        MT_father_loc2 = i;
+                        break;
+                    }
+                }
+
+                //swap gene1 in child1 and child2
+                MT_child1.SetGene(crossPoint1, MT_father.GetGene(crossPoint1));
+                MT_child2.SetGene(crossPoint1, MT_mother.GetGene(crossPoint1));
+
+                //swap gene2 in child1 and child2
+                MT_child1.SetGene(crossPoint2, MT_father.GetGene(crossPoint2));
+                MT_child2.SetGene(crossPoint2, MT_mother.GetGene(crossPoint2));
+
+                if (MT_child1.GetGene(MT_mother_loc1) != MT_child2.GetGene(crossPoint1) &&
+                        MT_child1.GetGene(MT_mother_loc2) != MT_child2.GetGene(crossPoint2) &&
+                        MT_child2.GetGene(MT_father_loc1) != MT_child1.GetGene(crossPoint1) &&
+                        MT_child2.GetGene(MT_father_loc2) != MT_child1.GetGene(crossPoint2))
                 {
-                    MT_mother_loc1 = i;
-                    break;
+                    //swap the other versions of those genes
+                    MT_child1.SetGene(MT_mother_loc1, MT_child2.GetGene(crossPoint1));
+                    MT_child1.SetGene(MT_mother_loc2, MT_child2.GetGene(crossPoint2));
+                    MT_child2.SetGene(MT_father_loc1, MT_child1.GetGene(crossPoint1));
+                    MT_child2.SetGene(MT_father_loc2, MT_child1.GetGene(crossPoint2));
                 }
             }
-            int MT_mother_loc2 = 0; //index of father gene2 in mother
-            for (int i = 0; i < MT_mother.GetNumGenes(); i++)
-            {
-                if (MT_mother.GetGene(i) == MT_father_gene2)
-                {
-                    MT_mother_loc2 = i;
-                    break;
-                }
-            }
-            int MT_father_loc1 = 0; //index of mother gene1 in father
-            for (int i = 0; i < MT_father.GetNumGenes(); i++)
-            {
-                if (MT_father.GetGene(i) == MT_mother_gene1)
-                {
-                    MT_father_loc1 = i;
-                    break;
-                }
-            }
-            int MT_father_loc2 = 0; //index of mother gene1 in father
-            for (int i = 0; i < MT_father.GetNumGenes(); i++)
-            {
-                if (MT_father.GetGene(i) == MT_mother_gene2)
-                {
-                    MT_father_loc2 = i;
-                    break;
-                }
-            }
 
-            ArrayList<Character> child1 = new ArrayList<>();
-            ArrayList<Character> child2 = new ArrayList<>();
-            for(int i = 0; i < 8; i++){
-                child1.add(MT_child1.GetGene(i));
-                child2.add(MT_child2.GetGene(i));
-            }
-
-            child1.set(crossPoint1, '0');
-            child1.set(crossPoint2, '0');
-            child2.set(crossPoint1, '0');
-            child2.set(crossPoint2, '0');
-            System.out.println(child1);
-            System.out.println(child2);
-
-            if(child1.contains(MT_father.GetGene(crossPoint1))){
-                child1.set(child1.indexOf(MT_father.GetGene(crossPoint1)), MT_mother.GetGene(crossPoint1));
-            }
-
-            System.out.println(child1);
-            System.out.println(child2);
-            if(child1.contains(MT_father.GetGene(crossPoint2))){
-                child1.set(child1.indexOf(MT_father.GetGene(crossPoint2)), MT_mother.GetGene(crossPoint2));
-            }
-
-            System.out.println(child1);
-            System.out.println(child2);
-            if(child2.contains(MT_mother.GetGene(crossPoint1))){
-                child2.set(child2.indexOf(MT_mother.GetGene(crossPoint1)), MT_father.GetGene(crossPoint1));
-            }
-            System.out.println(child1);
-            System.out.println(child2);
-
-            if(child2.contains(MT_mother.GetGene(crossPoint2))){
-                child2.set(child2.indexOf(MT_mother.GetGene(crossPoint2)), MT_father.GetGene(crossPoint2));
-            }
-
-            System.out.println(child1);
-            System.out.println(child2);
-
-            for (int i = 0; i < child1.size(); i++) {
-                MT_child1.SetGene(i, child1.get(i));
-                MT_child2.SetGene(i, child2.get(i));
-            }
-            //swap gene1 in child1 and child2
-            MT_child1.SetGene(crossPoint1, MT_father.GetGene(crossPoint1));
-            MT_child2.SetGene(crossPoint1, MT_mother.GetGene(crossPoint1));
-
-            //swap gene2 in child1 and child2
-            MT_child1.SetGene(crossPoint2, MT_father.GetGene(crossPoint2));
-            MT_child2.SetGene(crossPoint2, MT_mother.GetGene(crossPoint2));
-
-            /**
-            //swap the other versions of those genes
-            MT_child1.SetGene(MT_mother_loc1, MT_child2.GetGene(crossPoint1));
-            MT_child1.SetGene(MT_mother_loc2, MT_child2.GetGene(crossPoint2));
-            MT_child2.SetGene(MT_father_loc1, MT_child1.GetGene(crossPoint1));
-            MT_child2.SetGene(MT_father_loc2, MT_child1.GetGene(crossPoint2));
-            */
-
+            /*
             System.out.print(crossPoint1);
             System.out.print(", ");
             System.out.println(crossPoint2);
@@ -200,22 +155,7 @@ public class Mate
             System.out.print("child2: ");
             MT_child2.DisplayGenes();
             System.out.println("\n");
-
-            child1.set(crossPoint1, MT_father.GetGene(crossPoint1));
-            child1.set(crossPoint2, MT_father.GetGene(crossPoint2));
-            child2.set(crossPoint1, MT_mother.GetGene(crossPoint1));
-            child2.set(crossPoint2, MT_mother.GetGene(crossPoint2));
-            System.out.println(child1);
-            System.out.println(child2);
-            if(repeatChecker(child1) != -1){
-                System.out.println("child1 is bad");
-                System.exit(0);
-            }
-            if(repeatChecker(child2) != -1){
-                System.out.println("child2 is bad");
-                System.exit(0);
-            }
-
+            */
 
             population.add(MT_posChild1,MT_child1);
             population.add(MT_posChild2,MT_child2);
