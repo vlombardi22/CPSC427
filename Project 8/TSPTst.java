@@ -25,12 +25,12 @@ public class TSPTst
             System.out.println();
             System.out.println("Type\t# Generations\tCircuit Produced\tCost of Circuit");
 
-            System.out.print(0 + "\t");
+            System.out.print(args[1] + "\t");
             tsp.Evolve();
             for (int i = 1; i < 4; i++)
             {
                 tsp = new TSP(args[0], Integer.parseInt(args[1]));
-                System.out.print(i + "\t");
+                System.out.print(args[1] + "\t");
                 tsp.Evolve();
             }
         }
