@@ -169,25 +169,29 @@ public class Mate
         return population;
     }
 
-    // Order 1
-    public ArrayList<Chromosome> Ordered(ArrayList<Chromosome> population, int numPairs) {
-        for (int j = 0; j < numPairs; j++) {
+    //Ordered Crossover
+    public ArrayList<Chromosome> OrderedCrossover(ArrayList<Chromosome> population, int numPairs) {
+        for (int j = 0; j < numPairs; j++)
+        {
             MT_father = population.get(MT_posFather);
             MT_mother = population.get(MT_posMother);
             MT_child1 = new Chromosome(MT_numGenes);
             MT_child2 = new Chromosome(MT_numGenes);
-            // System.out.println(MT_numGenes);
+
             Random rnum = new Random();
             int crossPoint1 = rnum.nextInt(MT_numGenes - 2);
-            if (crossPoint1 == 0) {
+            if (crossPoint1 == 0)
+            {
                 crossPoint1 = 2;
             }
             int difference = MT_numGenes - crossPoint1;
-            if (difference > 5) {
+            if (difference > 5)
+            {
                 difference = 5;
             }
 
-            if (difference < 2) {
+            if (difference < 2)
+            {
                 difference = 2;
             }
             int x = rnum.nextInt(difference) + 1;
@@ -197,19 +201,21 @@ public class Mate
             ArrayList<Character> temp1 = new ArrayList<>();
             ArrayList<Character> temp2 = new ArrayList<>();
 
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 8; i++)
+            {
                 child1.add(MT_father.GetGene(i));
                 child2.add(MT_mother.GetGene(i));
             }
 
-
-            for (int i = crossPoint1; i < crossPoint2; i++) {
+            for (int i = crossPoint1; i < crossPoint2; i++)
+            {
                 temp1.add(MT_mother.GetGene(i));
                 //child1.remove(MT_father.GetGene(i));
                 temp2.add(MT_father.GetGene(i));
                 //child2.remove(MT_mother.GetGene(i));
             }
-            for (int i = 0; i < temp1.size(); i++) {
+            for (int i = 0; i < temp1.size(); i++)
+            {
                 if(child1.contains(temp1.get(i))){
                     //System.out.println(child1);
                     child1.remove(temp1.get(i));
@@ -219,45 +225,35 @@ public class Mate
                     child2.remove(temp2.get(i));
                 }
             }
-            /**
-            // cop out answer
-            for (int i = 0; i < temp1.size(); i++) {
-                child1.add(temp1.get(i));
-                child2.add(temp2.get(i));
-            }
-
-
-             for(int i = 0; i < 8; i++){
-             MT_child1.SetGene(i, child1.get(i));
-             MT_child2.SetGene(i, child2.get(i));
-             }
-            */
 
             int count1 = 0;
             int count2 = 0;
 
-            for (int i = 0; i < crossPoint1; i++){
+            for (int i = 0; i < crossPoint1; i++)
+            {
                 MT_child1.SetGene(count1, child1.get(i));
                 MT_child2.SetGene(count2, child2.get(i));
                 count1++;
                 count2++;
             }
 
-            for (int i = 0; i < temp1.size(); i++){
+            for (int i = 0; i < temp1.size(); i++)
+            {
                 MT_child1.SetGene(count1, temp1.get(i));
                 MT_child2.SetGene(count2, temp2.get(i));
                 count1++;
                 count2++;
             }
 
-            for (int i = crossPoint1; i < child1.size(); i++){
+            for (int i = crossPoint1; i < child1.size(); i++)
+            {
                 MT_child1.SetGene(count1, child1.get(i));
                 MT_child2.SetGene(count2, child2.get(i));
                 count1++;
                 count2++;
             }
 
-            /**
+            /*
             System.out.println("child1");
             System.out.println("");
             for (int i = 0; i < 8; i++){
@@ -278,23 +274,21 @@ public class Mate
             MT_posFather    = MT_posFather + 2;
             MT_posMother    = MT_posMother + 2;
         }
-
      return population;
     }
 
-
-
-
-    // Cycle
+    // Cycle Crossover
     public ArrayList<Chromosome> CycleCrossover(ArrayList<Chromosome> population, int numPairs) {
-        for (int j = 0; j < numPairs; j++) {
+        for (int j = 0; j < numPairs; j++)
+        {
             MT_father = population.get(MT_posFather);
             MT_mother = population.get(MT_posMother);
             MT_child1 = new Chromosome(MT_numGenes);
             MT_child2 = new Chromosome(MT_numGenes);
             ArrayList<Character> child1 = new ArrayList<>();
             ArrayList<Character> child2 = new ArrayList<>();
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 8; i++)
+            {
                 child1.add(MT_father.GetGene(i));
                 child2.add(MT_mother.GetGene(i));
             }
@@ -304,18 +298,20 @@ public class Mate
             child1.set(0, child2.get(0));
             child2.set(0, temp);
             int index = 0;
-            while(index != -1){
+            while(index != -1)
+            {
                 temp = child1.get(index);
                 child1.set(index, child2.get(index));
                 child2.set(index, temp);
                 index = repeatChecker(child1);
             }
 
-            for(int i = 0; i < child1.size(); i++){
+            for(int i = 0; i < child1.size(); i++)
+            {
                 MT_child1.SetGene(i, child1.get(i));
                 MT_child2.SetGene(i, child2.get(i));
             }
-            /**
+            /*
             System.out.println("child1");
             //System.out.println("");
             for (int i = 0; i < 8; i++){
@@ -341,15 +337,18 @@ public class Mate
         return population;
     }
 
-    private int repeatChecker(ArrayList<Character> input){
-        for(int x = 0; x < input.size(); x++){
-            for(int y = x + 1; y < input.size(); y++){
-                if(input.get(x) == input.get(y)){
+    private int repeatChecker(ArrayList<Character> input)
+    {
+        for (int x = 0; x < input.size(); x++)
+        {
+            for (int y = x + 1; y < input.size(); y++)
+            {
+                if (input.get(x) == input.get(y))
+                {
                     return y;
                 }
             }
         }
-
         return -1;
     }
 }

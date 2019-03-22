@@ -65,7 +65,7 @@ public abstract class GA extends Object
         System.out.println();
     }
 
-    private void DisplayChromosome(Chromosome chrome)
+    protected void DisplayChromosome(Chromosome chrome)
     {
         chrome.DisplayGenes();
         System.out.print("\t\t\t");
@@ -100,41 +100,6 @@ public abstract class GA extends Object
 
     protected void Mutate()
     {
-
-        int totalGenes  = (GA_numGenes * GA_numChromes);
-        int numMutate   = (int) (totalGenes * GA_mutFact);
-        Random rnum     = new Random();
-
-        for (int i = 0; i < numMutate; i++) {
-            //position of chromosome to mutate--but not the first one
-            //the number generated is in the range: [1..GA_numChromes)
-
-            int chromMut = 1 + (rnum.nextInt(GA_numChromes - 1));
-            chromMut = chromMut / 2; // I added this line for tournament pairing
-            int geneMut = rnum.nextInt(GA_numGenes); //pos of mutated gene
-            int geneMut2 = rnum.nextInt(GA_numGenes);
-            if(geneMut == geneMut2){
-                if(geneMut == 0){
-                    geneMut2++;
-                }else{
-                    geneMut2--;
-                }
-            }
-
-            Chromosome newChromosome = GA_pop.remove(chromMut); //get chromosome
-            //DisplayChromosome(newChromosome);
-            //System.out.println("");
-            // swaps the genes
-            char temp = newChromosome.GetGene(geneMut);
-            newChromosome.SetGene(geneMut, newChromosome.GetGene(geneMut2));
-            newChromosome.SetGene(geneMut2, temp);
-            GA_pop.add(newChromosome); //add mutated chromosome at the end
-            //DisplayChromosome(newChromosome);
-            //System.out.println("");
-           // System.out.println("");
-        }
-
-        /*
         int totalGenes  = (GA_numGenes * GA_numChromes);
         int numMutate   = (int) (totalGenes * GA_mutFact);
         Random rnum     = new Random();
@@ -156,38 +121,10 @@ public abstract class GA extends Object
 
             GA_pop.add(newChromosome); //add mutated chromosome at the end
         }
-        */
-
     }
 
     protected void InitPop()
     {
-        Random rnum = new Random();
-        char letter;
-        for (int index = 0; index < GA_numChromesInit; index++)
-        {
-            Chromosome Chrom = new Chromosome(GA_numGenes);
-            ArrayList<Character> genePool = new ArrayList<>();
-            int unusedGenes = GA_numGenes;
-            for(int counter = 0; counter < GA_numGenes; counter++){ // this prevents repeate
-                genePool.add(((char) (counter + 97)));
-            }
-
-            for (int j = 0; j < GA_numGenes; j++)
-            {
-                //letter = (char) (rnum.nextInt(26) + 97); //97 is the value 'a'
-                //letter = (char) (rnum.nextInt(8)+97);
-                int rindex = rnum.nextInt(unusedGenes);
-                letter = genePool.get(rindex);
-                Chrom.SetGene(j, letter);
-                genePool.remove(rindex);
-                unusedGenes--;
-            }
-            Chrom.SetCost(0);
-            GA_pop.add(Chrom);
-        }
-
-        /*
         Random rnum = new Random();
         char letter;
         for (int index = 0; index < GA_numChromesInit; index++)
@@ -202,8 +139,8 @@ public abstract class GA extends Object
             Chrom.SetCost(0);
             GA_pop.add(Chrom);
         }
-        */
     }
+
     protected abstract void ComputeCost();
 
     protected void Evolve()
@@ -213,7 +150,6 @@ public abstract class GA extends Object
         //int numPairs    = pairs.SimplePair();
         int numPairs = GA_pop.size();
         GA_pop = pairs.TournamentPair();
-        boolean found   = false;
 
         while (iterationCt < GA_numIterations)
         {
@@ -234,5 +170,4 @@ public abstract class GA extends Object
             ++iterationCt;
         }
     }
-
 }

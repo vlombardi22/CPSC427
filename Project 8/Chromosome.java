@@ -13,6 +13,13 @@ public class Chromosome
         CH_gene     = new char[CH_numGenes];
     }
 
+    public Chromosome(Chromosome other)
+    {
+        CH_numGenes = other.CH_numGenes;
+        CH_gene     = other.CH_gene;
+        CH_cost     = other.CH_cost;
+    }
+
     public int GetNumGenes()
     {
         return CH_numGenes;
