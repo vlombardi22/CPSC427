@@ -1,3 +1,14 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: GA.java
+ * Main class for all-purpose genetic algorithm
+ * Reference: http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/ga-depalma-chapter.pdf
+ */
+
 import java.lang.*;
 import java.util.*;
 

@@ -1,3 +1,14 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: GetParams.java
+ * Gets genetic algorithm params from a file and stores them in a Parameters object
+ * Reference: Dr. Paul De Palma
+ */
+
 import java.io.*;
 
 public class GetParams

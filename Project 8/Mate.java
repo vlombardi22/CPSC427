@@ -1,3 +1,14 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: Mate.java
+ * Contains mating algorithms for genetic algorithm
+ * Reference: http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/alternativeCrossoverTsp.pdf
+ */
+
 import java.util.*;
 import java.lang.*;
 

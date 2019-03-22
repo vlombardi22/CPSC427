@@ -1,6 +1,15 @@
-/**
- * this is supposed to read data from a matrix
- * TSP stands for traveling sales person
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: TSP.java
+ * Uses the genetic algorithm to solve the travelling salesperson problem
+ * Reference: http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/ga-depalma-chapter.pdf
+ *            http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/alternativeCrossoverTsp.pdf
+ *            http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/overbay_ganzerli_depalma.pdf
+ * Usage: java WordGuess params.dat 0
  */
 import java.io.FileNotFoundException;
 import java.util.ArrayList;

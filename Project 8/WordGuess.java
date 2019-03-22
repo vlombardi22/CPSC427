@@ -1,3 +1,14 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: WordGuess.java
+ * Runs a genetic algorithm to create a target word
+ * Reference: Dr. Paul De Palma
+ */
+
 import java.util.*;
 import java.lang.*;
 

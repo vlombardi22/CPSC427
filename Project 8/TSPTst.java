@@ -1,3 +1,16 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: TSPTst.java
+ * Uses the genetic algorithm to solve the travelling salesperson problem
+ * Reference: http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/ga-depalma-chapter.pdf
+ * Usage: java WordGuess params.dat 0
+ *     Where params.dat is the parameters file, and 0 is the type of algorithm (see TSP.java)
+ */
+
 import java.io.FileNotFoundException;
 
 public class TSPTst

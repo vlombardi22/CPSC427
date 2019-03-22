@@ -1,3 +1,13 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: Pair.java
+ * Contains pairing algorithms for genetic algorithm
+ * Reference: https://docs.google.com/presentation/d/17fC96aTLSxBnPXLxcWwIBXQ_j2tO_ke-vIrRZCnB930/edit#slide=id.p22
+ */
 
 import java.util.*;
 import java.lang.*;
