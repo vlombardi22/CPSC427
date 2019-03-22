@@ -126,6 +126,49 @@ public class Mate
                 }
             }
 
+            ArrayList<Character> child1 = new ArrayList<>();
+            ArrayList<Character> child2 = new ArrayList<>();
+            for(int i = 0; i < 8; i++){
+                child1.add(MT_child1.GetGene(i));
+                child2.add(MT_child2.GetGene(i));
+            }
+
+            child1.set(crossPoint1, '0');
+            child1.set(crossPoint2, '0');
+            child2.set(crossPoint1, '0');
+            child2.set(crossPoint2, '0');
+            System.out.println(child1);
+            System.out.println(child2);
+
+            if(child1.contains(MT_father.GetGene(crossPoint1))){
+                child1.set(child1.indexOf(MT_father.GetGene(crossPoint1)), MT_mother.GetGene(crossPoint1));
+            }
+
+            System.out.println(child1);
+            System.out.println(child2);
+            if(child1.contains(MT_father.GetGene(crossPoint2))){
+                child1.set(child1.indexOf(MT_father.GetGene(crossPoint2)), MT_mother.GetGene(crossPoint2));
+            }
+
+            System.out.println(child1);
+            System.out.println(child2);
+            if(child2.contains(MT_mother.GetGene(crossPoint1))){
+                child2.set(child2.indexOf(MT_mother.GetGene(crossPoint1)), MT_father.GetGene(crossPoint1));
+            }
+            System.out.println(child1);
+            System.out.println(child2);
+
+            if(child2.contains(MT_mother.GetGene(crossPoint2))){
+                child2.set(child2.indexOf(MT_mother.GetGene(crossPoint2)), MT_father.GetGene(crossPoint2));
+            }
+
+            System.out.println(child1);
+            System.out.println(child2);
+
+            for (int i = 0; i < child1.size(); i++) {
+                MT_child1.SetGene(i, child1.get(i));
+                MT_child2.SetGene(i, child2.get(i));
+            }
             //swap gene1 in child1 and child2
             MT_child1.SetGene(crossPoint1, MT_father.GetGene(crossPoint1));
             MT_child2.SetGene(crossPoint1, MT_mother.GetGene(crossPoint1));
@@ -134,13 +177,14 @@ public class Mate
             MT_child1.SetGene(crossPoint2, MT_father.GetGene(crossPoint2));
             MT_child2.SetGene(crossPoint2, MT_mother.GetGene(crossPoint2));
 
+            /**
             //swap the other versions of those genes
             MT_child1.SetGene(MT_mother_loc1, MT_child2.GetGene(crossPoint1));
             MT_child1.SetGene(MT_mother_loc2, MT_child2.GetGene(crossPoint2));
             MT_child2.SetGene(MT_father_loc1, MT_child1.GetGene(crossPoint1));
             MT_child2.SetGene(MT_father_loc2, MT_child1.GetGene(crossPoint2));
+            */
 
-            /*
             System.out.print(crossPoint1);
             System.out.print(", ");
             System.out.println(crossPoint2);
@@ -156,7 +200,22 @@ public class Mate
             System.out.print("child2: ");
             MT_child2.DisplayGenes();
             System.out.println("\n");
-            */
+
+            child1.set(crossPoint1, MT_father.GetGene(crossPoint1));
+            child1.set(crossPoint2, MT_father.GetGene(crossPoint2));
+            child2.set(crossPoint1, MT_mother.GetGene(crossPoint1));
+            child2.set(crossPoint2, MT_mother.GetGene(crossPoint2));
+            System.out.println(child1);
+            System.out.println(child2);
+            if(repeatChecker(child1) != -1){
+                System.out.println("child1 is bad");
+                System.exit(0);
+            }
+            if(repeatChecker(child2) != -1){
+                System.out.println("child2 is bad");
+                System.exit(0);
+            }
+
 
             population.add(MT_posChild1,MT_child1);
             population.add(MT_posChild2,MT_child2);
@@ -179,6 +238,8 @@ public class Mate
             MT_child2 = new Chromosome(MT_numGenes);
 
             Random rnum = new Random();
+            // calculates crossover points so that they are an acceptable distance from each other
+            // and the beginning and end of the list
             int crossPoint1 = rnum.nextInt(MT_numGenes - 2);
             if (crossPoint1 == 0)
             {
@@ -200,13 +261,13 @@ public class Mate
             ArrayList<Character> child2 = new ArrayList<>();
             ArrayList<Character> temp1 = new ArrayList<>();
             ArrayList<Character> temp2 = new ArrayList<>();
-
-            for (int i = 0; i < 8; i++)
+            // puts genes into an array
+            for (int i = 0; i < MT_numGenes; i++)
             {
                 child1.add(MT_father.GetGene(i));
                 child2.add(MT_mother.GetGene(i));
             }
-
+            // puts elements that need to be swapped into separate array lists
             for (int i = crossPoint1; i < crossPoint2; i++)
             {
                 temp1.add(MT_mother.GetGene(i));
@@ -214,6 +275,8 @@ public class Mate
                 temp2.add(MT_father.GetGene(i));
                 //child2.remove(MT_mother.GetGene(i));
             }
+
+            // deletes repeat elements from child arrays
             for (int i = 0; i < temp1.size(); i++)
             {
                 if(child1.contains(temp1.get(i))){
@@ -229,6 +292,7 @@ public class Mate
             int count1 = 0;
             int count2 = 0;
 
+            // puts all elements before crossoverpoint 1 back into child1 and child2
             for (int i = 0; i < crossPoint1; i++)
             {
                 MT_child1.SetGene(count1, child1.get(i));
@@ -236,7 +300,7 @@ public class Mate
                 count1++;
                 count2++;
             }
-
+            // puts crossover elements into child1 and child2
             for (int i = 0; i < temp1.size(); i++)
             {
                 MT_child1.SetGene(count1, temp1.get(i));
@@ -245,6 +309,7 @@ public class Mate
                 count2++;
             }
 
+            // puts all elements after crossover points back into child1 and child2
             for (int i = crossPoint1; i < child1.size(); i++)
             {
                 MT_child1.SetGene(count1, child1.get(i));
@@ -287,17 +352,20 @@ public class Mate
             MT_child2 = new Chromosome(MT_numGenes);
             ArrayList<Character> child1 = new ArrayList<>();
             ArrayList<Character> child2 = new ArrayList<>();
-            for (int i = 0; i < 8; i++)
+
+            // puts parent elements into arrays
+            for (int i = 0; i < MT_numGenes; i++)
             {
                 child1.add(MT_father.GetGene(i));
                 child2.add(MT_mother.GetGene(i));
             }
-
+            // preform initial swap
             char temp;
             temp = child1.get(0);
             child1.set(0, child2.get(0));
             child2.set(0, temp);
             int index = 0;
+            // cycle through child lists swapping repeat elements till there are none
             while(index != -1)
             {
                 temp = child1.get(index);
@@ -305,7 +373,7 @@ public class Mate
                 child2.set(index, temp);
                 index = repeatChecker(child1);
             }
-
+            // put elements back into child object
             for(int i = 0; i < child1.size(); i++)
             {
                 MT_child1.SetGene(i, child1.get(i));
@@ -337,6 +405,7 @@ public class Mate
         return population;
     }
 
+    // helper function that checks for repeats
     private int repeatChecker(ArrayList<Character> input)
     {
         for (int x = 0; x < input.size(); x++)

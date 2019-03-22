@@ -165,17 +165,16 @@ public class TSP extends GA
     {
         int iterationCt = 0;
         Pair pairs      = new Pair(GA_pop);
+        int numPairs;
         if (GA_config / 2 == 0)
         {
-            //TODO: top-down pairing
+            numPairs = pairs.SimplePair();
         }
         else
         {
-            //TODO: tournament pairing
+            numPairs                  = GA_pop.size();
+            GA_pop                    = pairs.TournamentPair();
         }
-        //int numPairs              = pairs.SimplePair();
-        int numPairs              = GA_pop.size();
-        GA_pop                    = pairs.TournamentPair();
         Chromosome bestChromosome = new Chromosome(8); //best option, must be initialized to something
         bestChromosome.SetCost(50000); //50000 is just a really big number so that any cost is lower
         int bestChromosomeIteration = 0;
@@ -185,7 +184,8 @@ public class TSP extends GA
             Mate mate = new Mate(GA_pop,GA_numGenes,GA_numChromes);
             if (GA_config % 2 == 0)
             {
-                GA_pop = mate.PartiallyMatchedCrossover(GA_pop,numPairs);
+                //GA_pop = mate.PartiallyMatchedCrossover(GA_pop,numPairs);
+                GA_pop = mate.CycleCrossover(GA_pop, numPairs);
             }
             else
             {
