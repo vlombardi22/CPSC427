@@ -79,7 +79,7 @@ class EightPuzzle:
             child[tile[0]][tile[1]] = 0
             # append child state to the list of states.
             
-            temp_lst.append((child, g_val))
+            temp_lst.append((child, g_val, state[2] + 1))
         return temp_lst
     
     # runs a best-first heuristic search to find the goal state given the start state
@@ -89,13 +89,13 @@ class EightPuzzle:
         f_value = 0 + self.h_value(start, goal)
         
         # open queue is states we have not yet viewed
-        # each item in open_queue is a tuple of(f-value, state, and g-value)
+        # each item in open_queue is a tuple of(f-value, state, g-value, depth)
         # f-value is first so the list can easily be sorted
         # it is instantiated with the staritng value
-        open_queue = [(f_value, start, 0)]
+        open_queue = [(f_value, start, 0, 0)]
         
         # children is a temporary list where
-        # each item in children is a tuple of (state, g-value)
+        # each item in children is a tuple of (state, g-value, depth)
         # order doesn't matter
         children = []
         
@@ -106,7 +106,7 @@ class EightPuzzle:
         
         # loop through the open queue (if we find the goal, we'll break)
         while not len(open_queue) == 0:
-            cs = (open_queue[0][1], open_queue[0][2])  # take from the front of the queue (best scored state)
+            cs = (open_queue[0][1], open_queue[0][2], open_queue[0][3])  # take from the front of the queue (best scored state)
             open_queue = open_queue[1:]  # dequeue
             closed_queue.append(cs)  # append that item to closed_queue
             
@@ -115,7 +115,9 @@ class EightPuzzle:
                 return closed_queue
             
             # else, generate the possible next moves
-            children = self.generate_states(cs)
+            # (as long as we haven't reached the depth limit)
+            if cs[2] < 5:
+                children = self.generate_states(cs)
             
             # loop through these new possible state
             while len(children) != 0:
@@ -126,7 +128,7 @@ class EightPuzzle:
                 if (child[0] not in [item[1] for item in open_queue] and
                         child[0] not in [item[1] for item in closed_queue]):
                     f_value = child[1] + self.h_value(child[0], goal)
-                    open_queue.append((f_value, child[0], child[1]))
+                    open_queue.append((f_value, child[0], child[1], child[2]))
                     if child[0] == goal:
                         closed_queue.append(child)
                         return closed_queue
