@@ -1,8 +1,15 @@
 /*
- Usage: java WordGuess <paramFile> <targetWord>
- Example: java WordGuess param.dat genetic
-    Using the parameter file, param.dat, try to generate the word "genetic."
-*/
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: WordGuessTst.java
+ * Uses the genetic algorithm to generate words until a target is reached
+ * Reference: http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/ga-depalma-chapter.pdf
+ * Usage: java WordGuess params.dat alexandria
+ *     Where params.dat is the parameters file, and alexandria is the target word
+ */
 
 import java.lang.*;
 

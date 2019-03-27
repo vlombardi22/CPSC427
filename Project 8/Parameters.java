@@ -1,3 +1,14 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: Parameters.java
+ * Contains parameters for genetic algorithm
+ * Reference: Dr. Paul De Palma
+ */
+
 import java.io.Serializable;
 public class Parameters implements Serializable
 {

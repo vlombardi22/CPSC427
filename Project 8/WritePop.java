@@ -1,3 +1,14 @@
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: WritePop.java
+ * Writes genetic algorithm population to a file
+ * Reference: Dr. Paul De Palma
+ */
+
 import java.util.*;
 import java.lang.*;
 import java.io.*;

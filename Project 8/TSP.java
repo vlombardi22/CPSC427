@@ -1,6 +1,15 @@
-/**
- * this is supposed to read data from a matrix
- * TSP stands for traveling sales person
+/*
+ * Class: CPSC 427
+ * Team Member 1: Maxwell Sherman
+ * Team Member 2: Vincent Lombardi
+ * Submitted by Maxwell Sherman
+ * GU Username: msherman3
+ * File Name: TSP.java
+ * Uses the genetic algorithm to solve the travelling salesperson problem
+ * Reference: http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/ga-depalma-chapter.pdf
+ *            http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/alternativeCrossoverTsp.pdf
+ *            http://www.cs.gonzaga.edu/faculty/depalma/handouts/cpsc427/overbay_ganzerli_depalma.pdf
+ * Usage: java WordGuess params.dat 0
  */
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -13,25 +22,23 @@ public class TSP extends GA
 {
     private int[][] GA_distance_table;
     private int GA_config;
-    private final int CIRCUIT_LENGTH = 8; //length of Hamiltonian circuit
 
     //config can be 0, 1, 2, or 3
-    //0: top-down pairing, partially-matched crossover mating
+    //0: top-down pairing, cycle crossover mating
     //1: top-down pairing, ordered crossover mating
-    //2: tournament pairing, partially-matched crossover mating
+    //2: tournament pairing, cycle crossover mating
     //3: tournament pairing, ordered crossover mating
 
     public TSP(String filename, int config) throws FileNotFoundException
     {
         super(filename, "");
-        GA_numGenes = CIRCUIT_LENGTH;
         GA_config = config;
 
         Scanner input = new Scanner(new File("TSPInput.txt"));
         int[][] dataMatrix = new int[8][8];
-        for (int x = 0; x < CIRCUIT_LENGTH; x++)
+        for (int x = 0; x < GA_numGenes; x++)
         {
-            for (int y = 0; y < CIRCUIT_LENGTH; y++)
+            for (int y = 0; y < GA_numGenes; y++)
             {
                 dataMatrix[x][y] = input.nextInt();
             }
@@ -155,7 +162,7 @@ public class TSP extends GA
                 cost += GA_distance_table[firstIndex][secondIndex];
             }
             cost += GA_distance_table[((int) chrom.GetGene(0)) - 'a']
-                    [((int) chrom.GetGene(CIRCUIT_LENGTH - 1)) - 'a']; //compute distance btwn start and end
+                    [((int) chrom.GetGene(GA_numGenes - 1)) - 'a']; //compute distance btwn start and end
             chrom.SetCost(cost);
             GA_pop.add(i,chrom);
         }
